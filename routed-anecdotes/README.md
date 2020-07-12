@@ -6,6 +6,9 @@
  - Added Routing and Link
  - changed order of Route so that home '/' is last
 
+**Commit 2** - 7.2: routed anecdotes, step2
+ - Added Anecdote component
+ - Added Parameterized route for individual Anecdotes 
 
 
 
