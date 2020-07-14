@@ -18,5 +18,7 @@
 **Commit 4** - 7.4: anecdotes and hooks step1
  - Simplified using a custom hook
 
+**Commit 5** - 7.5: anecdotes and hooks step2
+ - added a reset button and hook
  
 
