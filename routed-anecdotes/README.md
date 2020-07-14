@@ -15,8 +15,8 @@
  - Added Notification component and timeout to 10sec
  - Couldn't work out the 'Parameterized route revisited'
 
-
-
+**Commit 4** - 7.4: anecdotes and hooks step1
+ - Simplified using a custom hook
 
  
 
