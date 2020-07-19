@@ -21,7 +21,7 @@
 **Commit 5** - 7.5: anecdotes and hooks step2
  - added a reset button and hook
  
-**Commit 6** - 7.5: anecdotes and hooks step3
+**Commit 6** - 7.6: anecdotes and hooks step3
  - used spread syntax, encountered the error
  - fixed the error
 
