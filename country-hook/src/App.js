@@ -33,7 +33,6 @@ const useCountry = (name) => {
           }
         })
         .catch((response) => {
-          console.log('error')
           setCountry(null)
           setFound(false)
         })
