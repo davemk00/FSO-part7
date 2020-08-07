@@ -1,0 +1,38 @@
+body {
+  padding-left: 10px;
+}
+
+h1 {
+  color: black;
+}
+
+h2 {
+  color: green;
+}
+
+h3 {
+  color: blue;
+}
+
+.entry {
+  width: 230px;
+  margin-left: 10px;
+}
+
+.Notification {
+  color: green;
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.error {
+  color: red;
+}
+
+button {
+  padding: 2px;
+}
