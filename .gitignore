@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /bloglist-frontend-model
+/bloglist-frontend - Copy
 /.pnp
 .pnp.js
 

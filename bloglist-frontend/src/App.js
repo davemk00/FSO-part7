@@ -7,6 +7,9 @@ import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import { setNotification, clearNotification } from './reducers/notificationReducer'
+
+import { useDispatch } from 'react-redux'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -14,10 +17,9 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
-  const [errorMessage, setErrorMessage] = useState(null)
-  const [infoMessage, setInfoMessage] = useState(null)
-
   const blogFormRef = React.createRef()
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const getData = async () => {
@@ -53,6 +55,17 @@ const App = () => {
     }
   }
 
+  const dispNotification = ({msg, type}) => {
+    dispatch(setNotification({
+      notification: msg,
+      type: type,
+    }))
+    setTimeout(() => {
+      dispatch(clearNotification())
+    }, 5000)
+  }
+
+
   const handleLogin = async (event) => {
     event.preventDefault()
     console.log('logging in with', username, password)
@@ -69,17 +82,17 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
-      setInfoMessage(`${username} Logged in`)
-      setTimeout(() => {
-        setInfoMessage(null)
-        // console.log(null)
-      }, 5000)
+
+      dispNotification({
+        msg: `${username} Logged in`,
+        type: 'success'
+      })
+      
     } catch (exception) {
-      setErrorMessage(exception.response.data.error)
-      setTimeout(() => {
-        setErrorMessage(null)
-        // console.log(null)
-      }, 5000)
+      dispNotification({
+        msg: exception.response.data.error,
+        type: 'error'
+      })
     }
   }
 
@@ -127,11 +140,10 @@ const App = () => {
     const response = await blogService.update(blog.id, blog)
     blogs[blog.id] = response
     setBlogs(blogs)
-    setInfoMessage(`blog ${response.title} by ${response.author} has been liked`)
-    setTimeout(() => {
-      setInfoMessage(null)
-      // console.log(null)
-    }, 3000)
+    dispNotification({
+      msg: `blog ${response.title} by ${response.author} has been liked`,
+      type: 'success'
+    })
   }
 
   const removeBlog = async (blog) => {
@@ -141,17 +153,17 @@ const App = () => {
         const newBlogs = blogs.filter(x => x.id !== blog.id)
         if (!response) {
           setBlogs(newBlogs)
-          setInfoMessage(`Blog ${blog.title} removed successfully`)
-          setTimeout(() => {
-            setErrorMessage(null)
-          }, 5000)
+          dispNotification({
+            msg: `Blog ${blog.title} removed successfully`,
+            type: 'success'
+          })
         }
       }
     } catch (exception) {
-      setErrorMessage(exception.response.data.error)
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      dispNotification({
+        msg: exception.response.data.error,
+        type: 'error'
+      })
     }
   }
 
@@ -166,19 +178,17 @@ const App = () => {
     const result = await blogService.create(blogObject)
     console.log(result)
     setBlogs(blogs.concat(result))
-    setInfoMessage(`a new blog ${result.title} by ${result.author} has been added`)
-    setTimeout(() => {
-      setInfoMessage(null)
-      console.log(null)
-    }, 5000)
+    dispNotification({
+      msg: `a new blog ${result.title} by ${result.author} has been added`,
+      type: 'success'
+    })
   }
 
   return (
     <div>
       <h1>Blogs</h1>
 
-      <Notification message={ errorMessage } type={ 'error' } />
-      <Notification message={ infoMessage } type={ 'info' } />
+      <Notification />
 
       {user === null ?
         <div>
