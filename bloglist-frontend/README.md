@@ -4,4 +4,6 @@
   - added redux for the notifcation
   - lost the ability to increase likes!
 
-  
+  **Commit 2a** - 7.10a: redux, step2a
+  - added redux for login
+  - likes work but only after notification and only when keeping in old setNotification!

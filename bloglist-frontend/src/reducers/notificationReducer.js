@@ -4,8 +4,8 @@ const initialState = {
 }
 
 const notificationReducer = (state = initialState, action) => {
-  console.log('notification state now: ', state)
-  console.log('notification action: ', action)
+  // console.log('notification state now: ', state)
+  // console.log('notification action: ', action)
   
   switch (action.type) {
     case 'SET_NOTIFICATION':
@@ -28,7 +28,6 @@ const notificationReducer = (state = initialState, action) => {
 var timeoutID
 
 export const setNotification = (message, type) => {
-  console.log(message)
   clearTimeout(timeoutID)
   return async dispatch => {
     dispatch({
