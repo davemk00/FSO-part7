@@ -20,4 +20,9 @@
   - moved blog rendering to a component
   - added routing
 
+**Commit 5** - 7.14: Individual user view
+  - added userPage to show Individual user blogs
+  - small rearrangements
+  - added routing from user list to Individual user page
 
+  
