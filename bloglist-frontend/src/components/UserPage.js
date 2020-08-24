@@ -17,9 +17,9 @@ const UserPage = () => {
       <ul>
         {userBlogs.map((blog) =>
           <li key={blog.id}>
-            {/* <Link to={`/blogs/${blog.id}`}> */}
+            <Link to={`/blog/${blog.id}`}>
               {blog.title}
-            {/* </Link> */}
+            </Link>
           </li>
         )}
       </ul>

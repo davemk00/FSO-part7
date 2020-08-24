@@ -16,6 +16,7 @@ import { initialiseUsers } from './reducers/userReducer'
 import UsersPage from './components/UsersPage'
 import UserPage from './components/UserPage'
 import BlogsPage from './components/BlogsPage.js'
+import BlogView from './components/BlogView.js'
 
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -33,7 +34,7 @@ const App = () => {
 
   const blogs = useSelector((state) => state.blog)
   const user = useSelector((state) => state.login)
-  const users = useSelector((state) => state.users)
+  // const users = useSelector((state) => state.users)
   
   useEffect(() => {
     // Getting the user if already logged in
@@ -166,10 +167,16 @@ const App = () => {
         <Route path="/users/:id">
           <UserPage />
         </Route>
+        <Route path="/blog/:id">
+          <BlogView />
+        </Route>
         <Route path="/users">
           <UsersPage />
         </Route>
         <Route path="/blogs">
+          <BlogsPage />
+        </Route>
+        <Route path="/">
           <BlogsPage />
         </Route>
       </Switch>

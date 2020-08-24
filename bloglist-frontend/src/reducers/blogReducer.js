@@ -7,26 +7,26 @@ const blogReducer = (state = initialState, action) => {
   // console.log('action: ', action)
 
   switch (action.type) {
-    case 'INIT_BLOGS':
-      return action.data
-    case 'NEW_BLOG': {
-      return [...state, action.data]
+  case 'INIT_BLOGS':
+    return action.data
+  case 'NEW_BLOG': {
+    return [...state, action.data]
+  }
+  case 'DELETE_BLOG': {
+    const { id } = action.data
+    return state.filter((blog) => blog.id !== id)
+  }
+  case 'LIKE_BLOG': {
+    const { blog } = action.data
+    const id = blog.id
+    const updatedBlog = {
+      ...blog,
+      likes: blog.likes + 1,
     }
-    case 'DELETE_BLOG': {
-      const { id } = action.data
-      return state.filter((blog) => blog.id !== id)
-    }
-    case 'LIKE_BLOG': {
-      const { blog } = action.data
-      const id = blog.id
-      const updatedBlog = {
-        ...blog,
-        likes: blog.likes + 1,
-      }
-      return state.map((blog) => (blog.id !== id ? blog : updatedBlog))
-    }
-    default:
-      return state
+    return state.map((blog) => (blog.id !== id ? blog : updatedBlog))
+  }
+  default:
+    return state
   }
 }
 

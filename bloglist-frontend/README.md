@@ -25,4 +25,10 @@
   - small rearrangements
   - added routing from user list to Individual user page
 
-  
+**Commit 6** - 7.15: Blog view
+  - added single blog routing
+  - added single blog view
+  - removed redundant Blog.js
+  - lots of other little bits...
+
+

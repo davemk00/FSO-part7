@@ -1,63 +1,40 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import Blog from './Blog'
-import { likeBlog, deleteBlog } from '../reducers/blogReducer'
-import { setNotification, clearNotification } from '../reducers/notificationReducer'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 const BlogsPage = () => {
-  const dispatch = useDispatch()
   const blogs = useSelector((state) => state.blog)
-  const user = useSelector((state) => state.login)
 
-  const updateLikes = async (blog) => {
-    dispatch( likeBlog(blog) )
-    dispNotification({
-      msg: `blog ${blog.title} by ${blog.author} has been liked`,
-      type: 'success'
-    })
+  const blogRows = () => (
+    <div>
+      {blogs.map(blog =>
+        blogRow(blog)
+      )}
+    </div>
+  )
+
+  const blogStyle = {
+    paddingTop: 10,
+    paddingLeft: 2,
+    border: 'solid',
+    borderWidth: 1,
+    marginBottom: 5
   }
 
-  const dispNotification = ({msg, type}) => {
-    dispatch(setNotification({
-      notification: msg,
-      type: type,
-    }))
-    setTimeout(() => {
-      dispatch(clearNotification())
-    }, 5000)
-  }
-
-  const removeBlog = async (blog) => {
-    try {
-      if (window.confirm(`Confirm Delete Blog: ${blog.title} by ${blog.author}`)) {
-        dispatch( deleteBlog(blog.id) )
-        // const newBlogs = blogs.filter(x => x.id !== blog.id)
-        dispNotification({
-          msg: `Blog ${blog.title} removed successfully`,
-          type: 'success'
-        })
-      }
-    } catch (exception) {
-      console.log(exception)
-      dispNotification({
-        msg: exception.response.data.error,
-        type: 'error'
-      })
-    }
-  }
+  const blogRow = (blog) => (
+    <div style={blogStyle} key= {blog.id}>
+      <b>
+        <Link to={`/blog/${blog.id}`}>
+          {blog.title}
+        </Link>
+      </b> {blog.author}
+    </div>
+  )
 
   return (
     <div>
       <h3>Blogs: </h3>
-      {blogs.map(blog =>
-        <Blog
-          key = {blog.id}
-          blog={blog}
-          handleUpdate={() => updateLikes(blog)}
-          handleRemove={() => removeBlog(blog)}
-          showRemoveButton = {(user != null) && (user.id === blog.user.id)}
-        />
-      )}
+      {blogRows()}
     </div>
   )
 }
