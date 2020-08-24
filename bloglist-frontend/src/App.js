@@ -1,27 +1,33 @@
 import React, { useState, useEffect } from 'react'
+import {
+  BrowserRouter as Router,
+  Switch, Route, Link
+} from "react-router-dom"
 
 import LoginForm from './components/Login'
 import BlogForm from './components/BlogForm'
-import Blog from './components/Blog'
 import blogService from './services/blogs'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import { setNotification, clearNotification } from './reducers/notificationReducer'
 import { login, setUser, logout } from './reducers/loginReducer'
-import { setBlogs, likeBlog, deleteBlog } from './reducers/blogReducer'
+import { setBlogs } from './reducers/blogReducer'
+import { initialiseUsers } from './reducers/userReducer'
+import UsersPage from './components/UsersPage'
+import BlogsPage from './components/BlogsPage.js'
 
 import { useDispatch, useSelector } from 'react-redux'
 
 const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  
   const blogFormRef = React.createRef()
   
   const dispatch = useDispatch()
-  
+
   useEffect(() => {
     dispatch(setBlogs())
+    dispatch(initialiseUsers())
   }, [dispatch])
 
   const blogs = useSelector((state) => state.blog)
@@ -62,7 +68,7 @@ const App = () => {
       dispatch(clearNotification())
     }, 5000)
   }
-
+ 
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -112,48 +118,6 @@ const App = () => {
   )
 
 
-  const blogRows = () => (
-    <div>
-      <h3>Blogs: </h3>
-      {blogs.map(blog =>
-        <Blog
-          key = {blog.id}
-          blog={blog}
-          handleUpdate={() => updateLikes(blog)}
-          handleRemove={() => removeBlog(blog)}
-          showRemoveButton = {(user != null) && (user.id === blog.user.id)}
-        />
-      )}
-    </div>
-  )
-
-  const updateLikes = async (blog) => {
-    dispatch( likeBlog(blog) )
-    dispNotification({
-      msg: `blog ${blog.title} by ${blog.author} has been liked`,
-      type: 'success'
-    })
-  }
-
-  const removeBlog = async (blog) => {
-    try {
-      if (window.confirm(`Confirm Delete Blog: ${blog.title} by ${blog.author}`)) {
-        dispatch( deleteBlog(blog.id) )
-        // const newBlogs = blogs.filter(x => x.id !== blog.id)
-        dispNotification({
-          msg: `Blog ${blog.title} removed successfully`,
-          type: 'success'
-        })
-      }
-    } catch (exception) {
-      console.log(exception)
-      dispNotification({
-        msg: exception.response.data.error,
-        type: 'error'
-      })
-    }
-  }
-
   const newBlogForm = () => (
     <Togglable buttonLabel='New Blog' ref={blogFormRef}>
       <BlogForm createBlog={addBlog} />
@@ -171,25 +135,43 @@ const App = () => {
   }
 
   return (
-    <div>
-      <h1>Blogs</h1>
-
-      <Notification />
-
-      {!user.username ?
-        <div>
-          {loginForm()}
-        </div> :
-        <div>
-          {logoutForm()}
-          <br/>
-          {newBlogForm()}
-        </div>
-      }
+    <Router>
       <div>
-        {blogRows()}
+        <Link style={{padding: 5}} to="/blogs">blogs</Link>
+        <Link style={{padding: 5}} to="/users">users</Link>
+        {/* <Link style={{padding: 5}} to="/users/:id">users</Link> */}
       </div>
-    </div>
+
+      <div>
+        <h1>Blogs</h1>
+        <Notification />
+      </div>
+      <Switch>
+        {/* <Route path="/users/:id">
+          <UserPage users={users} />
+        </Route> */}
+        <Route path="/users">
+          <UsersPage />
+        </Route>
+        <Route path="/blogs">
+          <BlogsPage />
+        </Route>
+      </Switch>
+
+
+      <div>
+        {!user.username ?
+          <div>
+            {loginForm()}
+          </div> :
+          <div>
+            {logoutForm()}
+            <br/>
+            {newBlogForm()}
+          </div>
+        }
+      </div>
+    </Router>
   )
 }
 

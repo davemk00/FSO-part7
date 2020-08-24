@@ -13,3 +13,11 @@
   - added redux for blogs
   - fixed likes
 
+**Commit 4** - 7.13: Users view
+  - create user service
+  - Added Users to Redux Store
+  - created users view
+  - moved blog rendering to a component
+  - added routing
+
+
