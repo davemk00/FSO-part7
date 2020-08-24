@@ -31,4 +31,10 @@
   - removed redundant Blog.js
   - lots of other little bits...
 
+**Commit 7** - 7.16: Navigation
+  - Added NavBar component
+  - Removed some Toggleable in place of react logic
+  - removed old testing files
+  - refactored login functions from Login.js to NavBar.js
+  - removed Login.js
 
