@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { likeBlog, deleteBlog } from '../reducers/blogReducer'
 import { setNotification, clearNotification } from '../reducers/notificationReducer'
 import { Link, useHistory } from 'react-router-dom'
+import CommentForm from './CommentForm'
 
 const BlogView = () => {
   const dispatch = useDispatch()
@@ -26,22 +27,14 @@ const BlogView = () => {
     }, 5000)
   }
 
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
-  }
-
   const blogRow = (blog) => (
     <>
-    <div style={blogStyle} className='blogShow'>
-      <b>
+    <div>
+      <h3>
         <Link to={`/blog/${blog.id}`}>
           {blog.title}
         </Link>
-      </b>
+      </h3>
       <br/>
 
       <a href={blog.url}>{blog.url}</a>
@@ -56,19 +49,16 @@ const BlogView = () => {
 
       {((blog.user !== null) && (user.id === blog.user.id)) && <button onClick={() => removeBlog(blog)}>Remove</button>}
     </div>
-
-    <div>
-    <h4>Comments</h4>
-      {blog.comments.map(comment =>
-        commentRow(comment)
-      )}
-    </div>
     </>
   )
 
+  const commentStyle = {
+    marginLeft: 30,
+  }
+
   const commentRow = (comment) => (
-    <div key= {comment.id}>
-      <li>
+    <div key={comment.id}>
+      <li style={commentStyle}>
         {comment.content}
       </li>
     </div>
@@ -104,8 +94,13 @@ const BlogView = () => {
 
   return (
     <div>
-      <h3>{blog.title}</h3>
       {blogRow(blog)}
+      
+      <h4>Comments</h4>
+      <CommentForm />
+      {blog.comments.map(comment =>
+        commentRow(comment)
+      )}
     </div>
   )
 }

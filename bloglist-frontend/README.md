@@ -42,3 +42,7 @@
   - setting up POST controller, models, all the other
   - showing on blog
   - lots of things that I cannot remember
+
+**Commit 9** - 7.18: comments, step 2
+  - got the posting to database working correctly
+  - some refactoring

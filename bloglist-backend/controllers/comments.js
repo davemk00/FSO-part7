@@ -4,19 +4,20 @@ const Blog = require('../models/blog')
 const Comment = require('../models/comment')
 const logger = require('../utils/logger')
 
-commentsRouter.post('/api/blogs/:id/comments', async (request, response) => {
+commentsRouter.put('/api/blogs/:id/comments', async (request, response) => {
   const body = request.body
-  const id = request.params.id
+  const blogId = request.params.id
+  console.log(blogId)
 
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
   if (!request.token || !decodedToken.id) {
     return response.status(401).json({ error: 'token missing or invalid' })
   }
 
-  const blog = await Blog.findById(id) 
+  const blog = await Blog.findById(blogId) 
   
   const comment = new Comment({
-    blog: blog.id,
+    blogId: blog.id,
     content: body.content
   })
 

@@ -1,7 +1,7 @@
-POST http://localhost:3001/api/blogs/5f4bb4d2d635543cd0639d6d/comments
+PUT http://localhost:3001/api/blogs/5a422a851b54a676234d17f7/comments
 Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RVc2VybmFtZSIsImlkIjoiNWY0NDBhMDY1MDUzYzc3NzkwMjVlMjVmIiwiaWF0IjoxNTk4Mjk0NzQyfQ.H-A7bPzkJrhZPUCLXUfXXF0Q6m_9vMDeezGqSmH5_P0
 
 {
-  "content": "test comment2"
+  "content": "1"
 }

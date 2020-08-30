@@ -28,10 +28,6 @@ const NavBar = () => {
     padding: 0,
     display: 'inline',
     marginLeft: 10,
-    // paddingTop: 10,
-    // border: 'solid',
-    // borderWidth: 1,
-    // marginBottom: 5
   }
 
   const loginForm = () => (
