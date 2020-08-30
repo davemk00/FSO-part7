@@ -1,0 +1,11 @@
+PUT http://localhost:3003/api/blogs/5e8ae61c36c5ef5e44fdbdf3
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RVc2VybmFtZSIsImlkIjoiNWU4YWU1YzMzNmM1ZWY1ZTQ0ZmRiZGYyIiwiaWF0IjoxNTg2MTYxMjU1fQ.KmqRIK8pMzB96BFaAwHjAsBMk_ZBqG5CWWsXSmTBzxw
+
+{
+  "title": "Testing Single Blog insert using login Token 1",
+  "author": "An Author Likes+15",
+  "url": "https://reactpatterns.com/",
+  "likes": 22,
+  "__v": 0
+}

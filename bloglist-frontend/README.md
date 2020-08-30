@@ -38,3 +38,7 @@
   - refactored login functions from Login.js to NavBar.js
   - removed Login.js
 
+**Commit 8** - 7.17: comments, step 1
+  - setting up POST controller, models, all the other
+  - showing on blog
+  - lots of things that I cannot remember

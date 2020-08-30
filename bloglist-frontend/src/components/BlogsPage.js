@@ -12,13 +12,6 @@ const BlogsPage = () => {
   const blogFormRef = React.createRef()
   const user = useSelector((state) => state.login)
 
-  const blogRows = () => (
-    <div>
-      {blogs.map(blog =>
-        blogRow(blog)
-      )}
-    </div>
-  )
 
   const blogStyle = {
     paddingTop: 10,
@@ -27,6 +20,14 @@ const BlogsPage = () => {
     borderWidth: 1,
     marginBottom: 5
   }
+  
+  const blogRows = () => (
+    <div>
+      {blogs.map(blog =>
+        blogRow(blog)
+      )}
+    </div>
+  )
 
   const blogRow = (blog) => (
     <div style={blogStyle} key= {blog.id}>

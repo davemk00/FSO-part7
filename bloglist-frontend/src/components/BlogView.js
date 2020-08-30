@@ -16,7 +16,6 @@ const BlogView = () => {
   const blog = blogs.find(n => n.id === id)
   if (!blog) {    return null  }
   
-  
   const dispNotification = ({msg, type}) => {
     dispatch(setNotification({
       notification: msg,
@@ -34,7 +33,9 @@ const BlogView = () => {
     borderWidth: 1,
     marginBottom: 5
   }
+
   const blogRow = (blog) => (
+    <>
     <div style={blogStyle} className='blogShow'>
       <b>
         <Link to={`/blog/${blog.id}`}>
@@ -53,12 +54,28 @@ const BlogView = () => {
       {blog.author}
       <br />
 
-      {((user !== null) && (user.id === blog.user.id)) && <button onClick={() => removeBlog(blog)}>Remove</button>}
+      {((blog.user !== null) && (user.id === blog.user.id)) && <button onClick={() => removeBlog(blog)}>Remove</button>}
+    </div>
+
+    <div>
+    <h4>Comments</h4>
+      {blog.comments.map(comment =>
+        commentRow(comment)
+      )}
+    </div>
+    </>
+  )
+
+  const commentRow = (comment) => (
+    <div key= {comment.id}>
+      <li>
+        {comment.content}
+      </li>
     </div>
   )
 
+
   const updateLikes = async (blog) => {
-    console.log(blog)
     dispatch( likeBlog(blog) )
     dispNotification({
       msg: `blog ${blog.title} by ${blog.author} has been liked`,
@@ -67,7 +84,6 @@ const BlogView = () => {
   }
 
   const removeBlog = async (blog) => {
-    console.log(blog)
     try {
       if (window.confirm(`Confirm Delete Blog: ${blog.title} by ${blog.author}`)) {
         dispatch( deleteBlog(blog.id) )
