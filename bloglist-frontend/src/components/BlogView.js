@@ -5,6 +5,7 @@ import { likeBlog, deleteBlog } from '../reducers/blogReducer'
 import { setNotification, clearNotification } from '../reducers/notificationReducer'
 import { Link, useHistory } from 'react-router-dom'
 import CommentForm from './CommentForm'
+import { Button, Divider, Row, Col } from 'antd'
 
 const BlogView = () => {
   const dispatch = useDispatch()
@@ -28,40 +29,38 @@ const BlogView = () => {
   }
 
   const blogRow = (blog) => (
-    <>
-    <div>
-      <h3>
-        <Link to={`/blog/${blog.id}`}>
-          {blog.title}
-        </Link>
-      </h3>
-      <br/>
-
-      <a href={blog.url}>{blog.url}</a>
-      <br />
-
-      <div className='likes'>
-        <span className='numLikes'> {blog.likes} </span> likes
-        <button onClick={() => updateLikes(blog)}>Like</button>
-      </div>
-      {blog.author}
-      <br />
-
-      {((blog.user !== null) && (user.id === blog.user.id)) && <button onClick={() => removeBlog(blog)}>Remove</button>}
-    </div>
+    <>    
+      <Row key={blog.id}>
+        <Col span={4}>
+          <h3>
+            <Link to={`/blog/${blog.id}`}>
+              {blog.title}
+            </Link>
+          </h3>
+        </Col>
+        <Col span={3}>
+          {((blog.user !== null) && (user.id === blog.user.id)) && <Button type="primary" onClick={() => removeBlog(blog)}>Remove</Button>}
+        </Col>
+      </Row>
+      <Row>
+        <Col span={6}>
+          <a href={blog.url}>{blog.url}</a>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          {blog.author}
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <span className='likes'>
+            <span className='numLikes'> {blog.likes} </span> likes
+            <Button size='small' type="primary" onClick={() => updateLikes(blog)}>Like</Button>
+          </span>
+        </Col>
+      </Row>
     </>
-  )
-
-  const commentStyle = {
-    marginLeft: 30,
-  }
-
-  const commentRow = (comment) => (
-    <div key={comment.id}>
-      <li style={commentStyle}>
-        {comment.content}
-      </li>
-    </div>
   )
 
 
@@ -94,13 +93,22 @@ const BlogView = () => {
 
   return (
     <div>
+      <Divider />
       {blogRow(blog)}
-      
+      <Divider />
       <h4>Comments</h4>
-      <CommentForm />
       {blog.comments.map(comment =>
-        commentRow(comment)
+        <Row key={comment.id}>
+          <Col>
+            {comment.content}
+          </Col>
+        </Row>
       )}
+      <Row>
+        <Col>
+          <CommentForm />
+        </Col>
+      </Row>
     </div>
   )
 }

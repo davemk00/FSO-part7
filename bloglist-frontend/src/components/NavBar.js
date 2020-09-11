@@ -1,16 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import blogService from '../services/blogs'
 import { login, logout } from '../reducers/loginReducer'
 import { setNotification, clearNotification } from '../reducers/notificationReducer'
+import { Form, Input, Button, Menu } from 'antd'
+
 
 const NavBar = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const user = useSelector((state) => state.login)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch()  
+  const [form] = Form.useForm();
+  const [, forceUpdate] = useState();
+
+  // To disable submit button at the beginning.
+  useEffect(() => {
+    forceUpdate({});
+  }, []);
 
   const dispNotification = ({msg, type}) => {
     dispatch(setNotification({
@@ -22,38 +31,35 @@ const NavBar = () => {
     }, 5000)
   }
 
-
-  const navStyle = {
-    margin: 0,
-    padding: 0,
-    display: 'inline',
-    marginLeft: 10,
-  }
-
   const loginForm = () => (
-    <form onSubmit={handleLogin} style={navStyle}>
-      <span style={navStyle}>
-        username
-        <input
-          className="entry"
-          type="Username"
-          value={username}
-          id="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </span>
-      <span style={navStyle}>
-        password
-        <input
-          className="entry"
-          type="password"
-          value={password}
-          id="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </span>
-      <button id="login-submit" type="submit" style={navStyle}>login</button>
-    </form>
+    <Form form={form} name="login" layout="inline">
+      <Form.Item label="Username" name="username"
+        onChange={({ target }) => setUsername(target.value)}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item class="ant-menu-item" label="Password" name="password"
+        onChange={({ target }) => setPassword(target.value)}
+      >
+        <Input.Password />
+      </Form.Item>
+
+      <Form.Item shouldUpdate={true}>
+        {() => (
+          <Button 
+            type="primary" 
+            onClick={handleLogin}
+            disabled={
+              !form.isFieldsTouched(true) ||
+              form.getFieldsError().filter(({ errors }) => errors.length).length
+            }
+          >
+            Submit
+          </Button>
+        )}
+      </Form.Item>
+    </Form>
   )
 
   const handleLogin = async (event) => {
@@ -64,8 +70,7 @@ const NavBar = () => {
       const user = await dispatch( login(username, password) )
       
       blogService.setToken(user.token)
-      setUsername('')
-      setPassword('')
+      form.resetFields();
       
       dispNotification({
         msg: `${username} Logged in`,
@@ -81,10 +86,10 @@ const NavBar = () => {
   }
 
   const logoutForm = () => (
-    <span style={navStyle}>
-      <b>{ user.name }</b> logged in. 
-      <button type="submit" onClick={handleLogout} id="logoutButton" >logout</button>
-    </span>
+    <>
+      <b>{ user.name }</b> logged in.      
+      <Button type="primary" onClick={handleLogout} id="logoutButton" >logout</Button>
+    </>
   )
 
   const handleLogout = async (event) => {
@@ -100,17 +105,26 @@ const NavBar = () => {
     }
   }
 
-  return (
-    <div>
-      <Link style={{padding: 5}} to="/blogs">blogs</Link>
-      <Link style={{padding: 5}} to="/users">users</Link>
-      
-      {!user.username ?
-        loginForm()
-      :
-        logoutForm()
-      }
-    </div>
+  return (    
+    
+    <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']}>
+
+      <Menu.Item key="blogs">
+        <Link to="/blogs">blogs</Link>
+      </Menu.Item>
+
+
+      <Menu.Item key="users">
+        <Link to="/users">users</Link>
+      </Menu.Item>
+
+      <Menu.Item key="login" disabled="true">
+        {user.username 
+          ? <>{logoutForm()}</>
+          : <>{loginForm()}</>
+        }
+      </Menu.Item>
+    </Menu>
   )
 }
 

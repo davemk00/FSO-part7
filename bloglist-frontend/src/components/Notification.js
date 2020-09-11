@@ -1,5 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { Alert } from 'antd'
+
 
 const Notification = () => {
   const message = useSelector(state => state.notification.message)
@@ -8,15 +10,11 @@ const Notification = () => {
     return null
   } else if (message?.type === 'error') {
       return (
-        <div className="Notification error">
-          { message.notification }
-        </div>
+        <Alert message={message.notification} type="error" />
       )
     } else {
       return (
-        <div className="Notification">
-          { message.notification }
-        </div>
+        <Alert message={message.notification} type="success" />
       )
   }
 }

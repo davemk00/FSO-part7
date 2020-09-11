@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { createComment } from '../reducers/blogReducer'
+import { Form, Input, Button } from 'antd'
 
 const CommentForm = () => {
   const [newCommentContent, setNewCommentContent] = useState('')
@@ -24,19 +25,23 @@ const CommentForm = () => {
   }
 
   return (
-    <div className="formDiv">
-      <form onSubmit={addComment}>
-        <span className="blogEntry">
-          New Comment: <input
-            id="content"
-            className="entry"
-            value={newCommentContent}
-            onChange={handleCommentChange}
-          />
-          <button type="submit">Submit</button>
-        </span>
-      </form>
-    </div>
+    <Form
+      layout="inline"
+    >
+      <Form.Item
+        name='comment'
+        rules={[{ required: true, message: 'Please a comment.' }]}
+        value={newCommentContent}
+        onChange={handleCommentChange}
+        >
+        <Input />
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary" htmlType="submit" onClick={addComment}>
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
   )
 }
 

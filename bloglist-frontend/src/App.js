@@ -5,7 +5,6 @@ import {
 } from "react-router-dom"
 
 import blogService from './services/blogs'
-import Notification from './components/Notification'
 import { setUser } from './reducers/loginReducer'
 import { setBlogs } from './reducers/blogReducer'
 import { initialiseUsers } from './reducers/userReducer'
@@ -16,6 +15,10 @@ import BlogView from './components/BlogView'
 import NavBar from './components/NavBar'
 
 import { useDispatch } from 'react-redux'
+
+import { Layout } from 'antd';
+
+const { Header, Content } = Layout;
 
 const App = () => {
   
@@ -38,32 +41,34 @@ const App = () => {
 
 
   return (
-    <Router>
-      <NavBar />
-      <div>
-        <h1>Blogs App</h1>
-        <Notification />
-      </div>
+    <Layout className="layout">
+      <Router>
+        <Header>
+          <NavBar />
+        </Header>
+        <Content style={{ padding: '0 50px' }}>
+          <h1>Blogs App</h1>
 
-      <Switch>
-        <Route path="/users/:id">
-          <UserPage />
-        </Route>
-        <Route path="/blog/:id">
-          <BlogView />
-        </Route>
-        <Route path="/users">
-          <UsersPage />
-        </Route>
-        <Route path="/blogs">
-          <BlogsPage />
-        </Route>
-        <Route path="/">
-          <BlogsPage />
-        </Route>
-      </Switch>
-
-    </Router>
+          <Switch>
+            <Route path="/users/:id">
+              <UserPage />
+            </Route>
+            <Route path="/blog/:id">
+              <BlogView />
+            </Route>
+            <Route path="/users">
+              <UsersPage />
+            </Route>
+            <Route path="/blogs">
+              <BlogsPage />
+            </Route>
+            <Route path="/">
+              <BlogsPage />
+            </Route>
+         </Switch>
+        </Content>
+      </Router>
+    </Layout>
   )
 }
 

@@ -46,3 +46,9 @@
 **Commit 9** - 7.18: comments, step 2
   - got the posting to database working correctly
   - some refactoring
+
+**Commit 10** - 7.19,7.20: Styles, step1,2
+  - implemented Reactboot
+  - replaced Reactboot with Ant Design
+  - so many changes to get Ant Design working. Working tables are difficult, having forms in menu didn't work so well. So many issues, I Should have stayed with ReactBoot
+

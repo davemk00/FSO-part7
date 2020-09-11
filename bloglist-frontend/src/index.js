@@ -4,7 +4,7 @@ import { Provider } from "react-redux"
 import App from './App'
 import store from "./store";
 
-import './index.css'
+import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 
 ReactDOM.render(
   <Provider store = { store }>

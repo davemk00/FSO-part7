@@ -1,39 +1,17 @@
-body {
-  padding-left: 10px;
+.site-layout-content {
+  background: #fff;
+  padding: 24px;
+  min-height: 280px;
 }
 
-h1 {
-  color: black;
+#components-layout-demo-top .logo {
+  width: 120px;
+  height: 31px;
+  background:#b2dcee;
+  margin: 16px 24px 16px 0;
+  float: left;
 }
 
-h2 {
-  color: green;
-}
-
-h3 {
-  color: blue;
-  margin: 0;
-}
-
-.entry {
-  width: 230px;
-  margin-left: 10px;
-}
-
-.Notification {
-  color: green;
-  background: lightgrey;
-  font-size: 20px;
-  border-style: solid;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-.error {
-  color: red;
-}
-
-button {
-  padding: 2px;
+.ant-menu-horizontal > .ant-menu-item a {
+  color: rgb(240, 242, 245);
 }

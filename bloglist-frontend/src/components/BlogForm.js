@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { createBlog } from '../reducers/blogReducer'
 import { setNotification, clearNotification } from '../reducers/notificationReducer'
+import { Form, Input, Button } from 'antd'
 
 const BlogForm = () => {
   const [newBlogTitle, setNewBlogTitle] = useState('')
@@ -45,33 +46,36 @@ const BlogForm = () => {
 
   return (
     <div className="formDiv">
-      <form onSubmit={addBlog}>
+      <Form onSubmit={addBlog}>
         <h3>New blog:</h3>
-        <div className="blogEntry">
-          Title: <input
-            id="title"
-            className="entry"
-            value={newBlogTitle}
-            onChange={handleTitleChange}
-          />
-          <br></br>
-      Author: <input
-            id="author"
-            className="entry"
-            value={newBlogAuthor}
-            onChange={handleAuthorChange}
-          />
-          <br></br>
-      URL: <input
-            id="url"
-            className="entry"
-            value={newBlogURL}
-            onChange={handleURLChange}
-          />
-          <br></br>
-          <button type="submit">Submit</button>
-        </div>
-      </form>
+        <Form.Item 
+          label='Title'
+          name='title'
+          value={newBlogTitle}
+          onChange={handleTitleChange}>
+            <Input />
+        </Form.Item>
+        
+        <Form.Item 
+          label='Author'
+          name='author'
+          value={newBlogAuthor}
+          onChange={handleAuthorChange}>
+            <Input />
+        </Form.Item>
+
+        <Form.Item 
+          label='url'
+          name='url'
+          value={newBlogURL}
+          onChange={handleURLChange}>
+            <Input />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary">Submit</Button>
+        </Form.Item>
+      </Form>
     </div>
   )
 }
